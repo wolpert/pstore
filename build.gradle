@@ -20,7 +20,7 @@ ext {
     mockitoVersion = "1.10.19"
     slf4jVersion = "1.7.21"
     logbackVersion = "1.1.7"
-    cryptoVersion = "0.8.0"
+    cryptoVersion = "0.8.1"
     jacksonVersion = "2.8.2"
 }
 
