@@ -11,33 +11,33 @@ import java.util.Objects;
  * BSD-Style License 2016
  */
 
-public class ParanoidStoreBuilder {
+public class ParanoidEncrypterBuilder {
 
     private ParanoidManager paranoidManager;
     private ObjectMapper objectMapper;
     private JsonifierBuilder jsonifierBuilder;
 
-    public ParanoidStoreBuilder() {
+    public ParanoidEncrypterBuilder() {
         this.jsonifierBuilder = new JsonifierBuilder();
     }
 
-    public ParanoidStoreBuilder paranoidManager(ParanoidManager paranoidManager) {
+    public ParanoidEncrypterBuilder paranoidManager(ParanoidManager paranoidManager) {
         this.paranoidManager = paranoidManager;
         return this;
     }
 
-    public ParanoidStoreBuilder objectMapper(ObjectMapper objectMapper) {
+    public ParanoidEncrypterBuilder objectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
         jsonifierBuilder.objectMapper(objectMapper);
         return this;
     }
 
-    public <T> ParanoidStore<T> build(Class<T> clazz) {
+    public <T> ParanoidEncrypter<T> build(Class<T> clazz) {
         Objects.requireNonNull(paranoidManager);
         if (objectMapper == null) {
             objectMapper(new ObjectMapper());
         }
         Jsonifier<T> jsonifier = jsonifierBuilder.build(clazz);
-        return new ParanoidStore<>(jsonifier, paranoidManager);
+        return new ParanoidEncrypter<T>(jsonifier, paranoidManager);
     }
 }

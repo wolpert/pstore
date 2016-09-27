@@ -14,7 +14,7 @@ public class Entry {
     private final String url;
     private Date createDate;
     private Date updateDate;
-    private String entryDetailsString;
+    private String entryDetailIdentifier;
 
     public Entry(String url) {
         this.url = Objects.requireNonNull(url);
@@ -24,11 +24,11 @@ public class Entry {
     public Entry(@JsonProperty(value = "url", required = true) String url,
                  @JsonProperty(value = "createDate") Date createDate,
                  @JsonProperty(value = "updateDate") Date updateDate,
-                 @JsonProperty(value = "entryDetails") String entryDetailsString) {
+                 @JsonProperty(value = "entryDetailIdentifier") String entryDetailIdentifier) {
         this.url = Objects.requireNonNull(url);
         this.createDate = createDate;
         this.updateDate = updateDate;
-        this.entryDetailsString = entryDetailsString;
+        this.entryDetailIdentifier = entryDetailIdentifier;
     }
 
     public String getUrl() {
@@ -51,12 +51,12 @@ public class Entry {
         this.updateDate = updateDate;
     }
 
-    public String getEntryDetailsString() {
-        return entryDetailsString;
+    public String getEntryDetailIdentifier() {
+        return entryDetailIdentifier;
     }
 
-    public void setEntryDetailsString(String entryDetailsString) {
-        this.entryDetailsString = entryDetailsString;
+    public void setEntryDetailIdentifier(String entryDetailIdentifier) {
+        this.entryDetailIdentifier = entryDetailIdentifier;
     }
 
     @Override

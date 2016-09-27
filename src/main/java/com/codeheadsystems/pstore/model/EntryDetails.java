@@ -18,7 +18,6 @@ public class EntryDetails {
     private Map<String, String> attributes = new HashMap<String, String>();
 
     public EntryDetails() {
-
     }
 
     @JsonCreator

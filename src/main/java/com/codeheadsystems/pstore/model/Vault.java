@@ -1,35 +1,31 @@
 package com.codeheadsystems.pstore.model;
 
+import com.codeheadsystems.crypto.manager.SecondaryKey;
+
+import java.util.Collection;
+
 /**
  * Created by wolpert on 9/19/16.
  */
 public class Vault {
 
-    private byte[] encryptedEntries;
-    private byte[] encryptedKey;
-    private byte[] salt;
+    private SecondaryKey secondaryKey;
+    private String encryptedEntries;
+    private transient volatile Collection<Entry> entries;
 
-    public byte[] getEncryptedEntries() {
-        return encryptedEntries;
+    public Collection<Entry> getEntries() {
+        return entries;
     }
 
-    public void setEncryptedEntries(byte[] encryptedEntries) {
-        this.encryptedEntries = encryptedEntries;
+    public void setEntries(Collection<Entry> entries) {
+        this.entries = entries;
     }
 
-    public byte[] getEncryptedKey() {
-        return encryptedKey;
+    public SecondaryKey getSecondaryKey() {
+        return secondaryKey;
     }
 
-    public void setEncryptedKey(byte[] encryptedKey) {
-        this.encryptedKey = encryptedKey;
-    }
-
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
+    public void setSecondaryKey(SecondaryKey secondaryKey) {
+        this.secondaryKey = secondaryKey;
     }
 }

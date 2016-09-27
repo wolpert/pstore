@@ -4,7 +4,7 @@ import com.codeheadsystems.crypto.CryptoException;
 import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.crypto.manager.SecondaryKey;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
-import com.codeheadsystems.pstore.SecureStoreException;
+import com.codeheadsystems.pstore.SecureEncryptionException;
 import com.codeheadsystems.pstore.model.Entry;
 import com.codeheadsystems.pstore.utils.Jsonifier;
 import com.codeheadsystems.pstore.utils.JsonifierBuilder;
@@ -34,10 +34,10 @@ public class ParanoidStoreTest {
 
 
     @Test
-    public void defaultTest() throws IOException, SecureStoreException, SecretKeyExpiredException, CryptoException {
+    public void defaultTest() throws IOException, SecureEncryptionException, SecretKeyExpiredException, CryptoException {
         Entry entry = getDefaultEntry();
         Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(Entry.class);
-        ParanoidStore<Entry> paranoidStore = new ParanoidStore<>(jsonifier, paranoidManager);
+        ParanoidEncrypter<Entry> paranoidStore = new ParanoidEncrypter<Entry>(jsonifier, paranoidManager);
         byte[] bytes = new byte[1];
         bytes[0] = 5;
         String jsonExpected = jsonifier.toJson(entry);
@@ -51,10 +51,10 @@ public class ParanoidStoreTest {
     }
 
     @Test
-    public void testWithBuilder() throws IOException, SecretKeyExpiredException, CryptoException, SecureStoreException {
+    public void testWithBuilder() throws IOException, SecretKeyExpiredException, CryptoException, SecureEncryptionException {
         Entry entry = getDefaultEntry();
         Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(Entry.class);
-        ParanoidStore<Entry> paranoidStore = new ParanoidStoreBuilder().paranoidManager(paranoidManager).build(Entry.class);
+        ParanoidEncrypter<Entry> paranoidStore = new ParanoidEncrypterBuilder().paranoidManager(paranoidManager).build(Entry.class);
         byte[] bytes = new byte[1];
         bytes[0] = 5;
         String jsonExpected = jsonifier.toJson(entry);

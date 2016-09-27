@@ -14,7 +14,7 @@ public class ValidationUtils {
 
     public static void validate(Entry entry) {
         assertNotNull(entry);
-        String entryDetails = entry.getEntryDetailsString();
+        String entryDetails = entry.getEntryDetailIdentifier();
         assertNotNull(entryDetails);
     }
 
@@ -29,7 +29,7 @@ public class ValidationUtils {
         assertEquals(e1.getUrl(), e2.getUrl());
         assertEquals(e1.getCreateDate(), e2.getCreateDate());
         assertEquals(e1.getUpdateDate(), e2.getUpdateDate());
-        assertEquals(e1.getEntryDetailsString(), e2.getEntryDetailsString());
+        assertEquals(e1.getEntryDetailIdentifier(), e2.getEntryDetailIdentifier());
     }
 
     public static void validateEqual(EntryDetails ed1, EntryDetails ed2) {
