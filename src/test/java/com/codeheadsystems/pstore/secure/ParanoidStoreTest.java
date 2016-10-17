@@ -32,7 +32,6 @@ public class ParanoidStoreTest {
     @Mock
     SecondaryKey secondaryKey;
 
-
     @Test
     public void defaultTest() throws IOException, SecureEncryptionException, SecretKeyExpiredException, CryptoException {
         Entry entry = getDefaultEntry();
@@ -45,8 +44,8 @@ public class ParanoidStoreTest {
         when(paranoidManager.encode(jsonExpected, secondaryKey)).thenReturn(bytes);
         when(paranoidManager.decode(bytes, secondaryKey)).thenReturn(jsonExpected);
 
-        String json = paranoidStore.convertToString(secondaryKey, entry);
-        Entry e2 = paranoidStore.convertFromString(secondaryKey, json);
+        byte[] bytesEnc = paranoidStore.convertToString(secondaryKey, entry);
+        Entry e2 = paranoidStore.convertFromString(secondaryKey, bytesEnc);
         validateEqual(entry, e2);
     }
 
@@ -62,8 +61,8 @@ public class ParanoidStoreTest {
         when(paranoidManager.encode(jsonExpected, secondaryKey)).thenReturn(bytes);
         when(paranoidManager.decode(bytes, secondaryKey)).thenReturn(jsonExpected);
 
-        String json = paranoidStore.convertToString(secondaryKey, entry);
-        Entry e2 = paranoidStore.convertFromString(secondaryKey, json);
+        byte[] bytesEnc = paranoidStore.convertToString(secondaryKey, entry);
+        Entry e2 = paranoidStore.convertFromString(secondaryKey, bytesEnc);
         validateEqual(entry, e2);
     }
 
@@ -72,7 +71,8 @@ public class ParanoidStoreTest {
         entry = new Entry("http://www.google.com/",
                 new Date(),
                 new Date(),
-                "string123");
+                "string123",
+                null);
         return entry;
     }
 

@@ -1,5 +1,6 @@
 package com.codeheadsystems.pstore.model;
 
+import com.codeheadsystems.pstore.secure.StoredSecondaryKey;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,20 +16,24 @@ public class Entry {
     private Date createDate;
     private Date updateDate;
     private String entryDetailIdentifier;
+    private StoredSecondaryKey storedSecondaryKey;
 
-    public Entry(String url) {
-        this.url = Objects.requireNonNull(url);
-    }
 
     @JsonCreator
     public Entry(@JsonProperty(value = "url", required = true) String url,
                  @JsonProperty(value = "createDate") Date createDate,
                  @JsonProperty(value = "updateDate") Date updateDate,
-                 @JsonProperty(value = "entryDetailIdentifier") String entryDetailIdentifier) {
-        this.url = Objects.requireNonNull(url);
+                 @JsonProperty(value = "entryDetailIdentifier") String entryDetailIdentifier,
+                 @JsonProperty(value = "secondary") StoredSecondaryKey storedSecondaryKey) {
+        this(url);
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.entryDetailIdentifier = entryDetailIdentifier;
+        this.storedSecondaryKey = storedSecondaryKey;
+    }
+
+    public Entry(String url) {
+        this.url = Objects.requireNonNull(url);
     }
 
     public String getUrl() {

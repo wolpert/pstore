@@ -12,6 +12,6 @@ public interface ParanoidStore {
 
     Vault generateNewDataStore(String password);
 
-    DataStoreEntry generateDataStoreEntry(Vault vault, Entry entry, EntryDetails entryDetails)
+    DataStoreEntry generateDataStoreEntry(Vault vault, Entry entry, EntryDetails entryDetails);
 
 }

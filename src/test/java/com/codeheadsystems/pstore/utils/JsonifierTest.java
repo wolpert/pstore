@@ -29,7 +29,7 @@ public class JsonifierTest {
         entry = new Entry("http://www.google.com/",
                 new Date(),
                 new Date(),
-                "string123");
+                "string123", null);
         return entry;
     }
 }
