@@ -1,4 +1,4 @@
-package com.codeheadsystems.pstore;
+package com.codeheadsystems.pstore.datastore;
 
 /**
  * BSD-Style License 2016

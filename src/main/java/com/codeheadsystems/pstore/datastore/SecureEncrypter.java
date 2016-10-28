@@ -1,4 +1,4 @@
-package com.codeheadsystems.pstore;
+package com.codeheadsystems.pstore.datastore;
 
 import com.codeheadsystems.crypto.manager.SecondaryKey;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;

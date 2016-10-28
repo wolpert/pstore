@@ -1,6 +1,6 @@
 package com.codeheadsystems.pstore.model;
 
-import com.codeheadsystems.pstore.secure.StoredSecondaryKey;
+import com.codeheadsystems.pstore.datastore.StoredSecondaryKey;
 
 import java.util.Collection;
 

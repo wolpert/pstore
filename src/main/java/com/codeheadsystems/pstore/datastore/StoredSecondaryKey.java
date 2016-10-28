@@ -1,4 +1,4 @@
-package com.codeheadsystems.pstore.secure;
+package com.codeheadsystems.pstore.datastore;
 
 import com.codeheadsystems.crypto.CryptoException;
 import com.codeheadsystems.crypto.manager.Manager;

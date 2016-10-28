@@ -1,4 +1,4 @@
-package com.codeheadsystems.pstore.secure;
+package com.codeheadsystems.pstore.datastore;
 
 import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.pstore.utils.Jsonifier;

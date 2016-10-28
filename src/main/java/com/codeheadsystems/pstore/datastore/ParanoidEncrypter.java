@@ -1,11 +1,9 @@
-package com.codeheadsystems.pstore.secure;
+package com.codeheadsystems.pstore.datastore;
 
 import com.codeheadsystems.crypto.CryptoException;
 import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.crypto.manager.SecondaryKey;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
-import com.codeheadsystems.pstore.SecureEncrypter;
-import com.codeheadsystems.pstore.SecureEncryptionException;
 import com.codeheadsystems.pstore.utils.Jsonifier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 

@@ -1,5 +1,7 @@
 package com.codeheadsystems.pstore.datastore;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Created by wolpert on 9/27/16.
  */
@@ -13,10 +15,10 @@ public class DataStoreEntry {
     private boolean dirty = true;
 
     public DataStoreEntry(String identifier, byte[] encryptedKey, byte[] salt, byte[] content) {
-        this.identifier = identifier;
-        this.encryptedKey = encryptedKey;
+        this.identifier = requireNonNull(identifier);
+        this.encryptedKey = requireNonNull(encryptedKey);
+        this.content = requireNonNull(content);
         this.salt = salt;
-        this.content = content;
     }
 
     public String getIdentifier() {
