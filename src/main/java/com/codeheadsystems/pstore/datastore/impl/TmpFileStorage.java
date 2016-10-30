@@ -18,7 +18,7 @@ public class TmpFileStorage implements DataStore {
     private final File storageDirectory;
 
     public TmpFileStorage() throws IOException {
-        this(new File("/tmp"));
+        this(new File("/tmp/pstore"));
     }
 
     public TmpFileStorage(File storageDirectory) throws IOException {
