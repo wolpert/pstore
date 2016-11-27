@@ -1,7 +1,5 @@
 package com.codeheadsystems.pstore.model;
 
-import com.codeheadsystems.pstore.datastore.StoredSecondaryKey;
-
 import java.util.Collection;
 
 /**
@@ -9,8 +7,6 @@ import java.util.Collection;
  */
 public class Vault {
 
-    private StoredSecondaryKey storedSecondaryKey;
-    private String encryptedEntries;
     private transient volatile Collection<Entry> entries;
 
     public Collection<Entry> getEntries() {
@@ -21,11 +17,4 @@ public class Vault {
         this.entries = entries;
     }
 
-    public StoredSecondaryKey getSecondaryKey() {
-        return storedSecondaryKey;
-    }
-
-    public void setSecondaryKey(StoredSecondaryKey storedSecondaryKey) {
-        this.storedSecondaryKey = storedSecondaryKey;
-    }
 }

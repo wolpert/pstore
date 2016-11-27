@@ -19,6 +19,16 @@ public interface DataStore {
     String put(byte[] data) throws IOException;
 
     /**
+     * Stores the dataset and returns an identifier usable to retrieve it later.
+     *
+     * @param data to be stored in the datastore
+     * @param identifier that will be used to update the datastore
+     * @return an identifier representing the data in the datastore.
+     * @throws IOException if we could not store the data into the datastore
+     */
+    String put(byte[] data, String identifier) throws IOException;
+
+    /**
      * Given the identifier, returns the data set the identifier pointed to.
      * Can be null if its not available.
      *

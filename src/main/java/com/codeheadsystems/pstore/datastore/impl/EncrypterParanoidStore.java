@@ -30,6 +30,12 @@ public class EncrypterParanoidStore<T> implements ParanoidStore<T> {
     }
 
     @Override
+    public String put(SecondaryKey secondaryKey, T data, String identifier) throws SecretKeyExpiredException, SecureEncryptionException, IOException {
+        byte[] dataToUpload = secureEncrypter.convertToString(secondaryKey, data);
+        return dataStore.put(dataToUpload, identifier);
+    }
+
+    @Override
     public T get(SecondaryKey secondaryKey, String identifier) throws IOException, SecretKeyExpiredException, SecureEncryptionException {
         byte[] dataFromStore = dataStore.get(identifier);
         if (dataFromStore == null) {

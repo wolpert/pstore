@@ -43,6 +43,27 @@ public class ParanoidStoreBuilderTest {
         }
     }
 
+    @Test
+    public void testNamedDatastore() throws IOException, CryptoException, SecretKeyExpiredException, SecureEncryptionException {
+        Map<String, Integer> firstMap = getDefaultMap();
+        DataStore dataStore = new TmpFileStorage();
+        ParanoidManager manager = new ParanoidManager(14); // used 14 so the test case was fast'ish
+        String id = "blah";
+        ParanoidStore<Map> store = new ParanoidStoreBuilder()
+                .dataStore(dataStore)
+                .paranoidManager(manager)
+                .build(Map.class);
+        SecondaryKey secondaryKey = manager.generateFreshSecondary("xyzzy");
+        String idReturned = store.put(secondaryKey, firstMap, id);
+        try {
+            assertEquals(id, idReturned);
+            Map<String, Integer> secondMap = store.get(secondaryKey, id); // Need to fix generics here
+            assertEquals(firstMap, secondMap);
+        } finally {
+            store.delete(id);
+        }
+    }
+
     private Map<String, Integer> getDefaultMap() {
         Map<String, Integer> map = new HashMap<>();
         map.put("a", 1);

@@ -35,6 +35,11 @@ public class TmpFileStorage implements DataStore {
     @Override
     public String put(byte[] data) throws IOException {
         String identifier = UUID.randomUUID().toString();
+        return put(data, identifier);
+    }
+
+    @Override
+    public String put(byte[] data, String identifier) throws IOException {
         File outfile = getFileForIdentifier(identifier);
         FileOutputStream fos = new FileOutputStream(outfile);
         fos.write(data);

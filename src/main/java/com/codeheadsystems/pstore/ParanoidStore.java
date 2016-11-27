@@ -28,6 +28,20 @@ public interface ParanoidStore<T> {
     String put(SecondaryKey secondaryKey, T data) throws SecretKeyExpiredException, SecureEncryptionException, IOException;
 
     /**
+     * Updates or stores the existing entry in the data store. Returns the identifier used.
+     * This will overwrite big time!
+     *
+     * @param secondaryKey The key used to encrypt the data
+     * @param data         The data that is to be stored
+     * @param identifier   The string identifier that was used to store this object
+     * @return A string identifier that can be used to get the data back
+     * @throws SecureEncryptionException if the encryption failed
+     * @throws SecretKeyExpiredException if the key had expired
+     * @throws IOException               If we could not store the data
+     */
+    String put(SecondaryKey secondaryKey, T data, String identifier)  throws SecretKeyExpiredException, SecureEncryptionException, IOException;
+
+    /**
      * Retrieves the data from the store decrypted with the secondary key given
      *
      * @param secondaryKey The key used to encrypt the data
