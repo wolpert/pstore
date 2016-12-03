@@ -24,7 +24,7 @@ public class Entry {
                  @JsonProperty(value = "createDate") Date createDate,
                  @JsonProperty(value = "updateDate") Date updateDate,
                  @JsonProperty(value = "entryDetailIdentifier") String entryDetailIdentifier,
-                 @JsonProperty(value = "secondary") StoredSecondaryKey storedSecondaryKey) {
+                 @JsonProperty(value = "storedSecondaryKey") StoredSecondaryKey storedSecondaryKey) {
         this(url);
         this.createDate = createDate;
         this.updateDate = updateDate;

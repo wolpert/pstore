@@ -1,27 +1,25 @@
 package com.codeheadsystems.pstore;
 
-import com.codeheadsystems.crypto.manager.SecondaryKey;
+import com.codeheadsystems.crypto.CryptoException;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
 import com.codeheadsystems.pstore.datastore.SecureEncryptionException;
-import com.codeheadsystems.pstore.model.Entry;
-import com.codeheadsystems.pstore.model.EntryDetails;
+import com.codeheadsystems.pstore.exceptions.VaultExistsException;
+import com.codeheadsystems.pstore.model.Vault;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by wolpert on 9/19/16.
  */
 public interface VaultManager {
 
-    List<Entry> entries(SecondaryKey secondaryKey);
+    Vault initVault(String id, String password) throws VaultExistsException, CryptoException, SecretKeyExpiredException, IOException, SecureEncryptionException;
 
-    List<Entry> entries(SecondaryKey secondaryKey, String searchString);
+    Vault unlockVault(String id, String password) throws VaultExistsException, CryptoException, SecretKeyExpiredException, IOException, SecureEncryptionException;
 
-    EntryDetails entryDetails(SecondaryKey secondaryKey, String identifier) throws SecretKeyExpiredException, IOException, SecureEncryptionException;
+    void deleteVault(String id) throws IOException;
 
-    String store(SecondaryKey secondaryKey, EntryDetails entryDetails) throws SecretKeyExpiredException, IOException, SecureEncryptionException;
-
-    void delete(String identifier);
+    Collection<String> listVaults();
 
 }
