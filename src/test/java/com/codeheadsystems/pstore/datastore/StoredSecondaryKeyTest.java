@@ -3,6 +3,7 @@ package com.codeheadsystems.pstore.datastore;
 import com.codeheadsystems.crypto.Utilities;
 import com.codeheadsystems.pstore.utils.Jsonifier;
 import com.codeheadsystems.pstore.utils.JsonifierBuilder;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class StoredSecondaryKeyTest {
     @Test
     public void testMarshaling() throws IOException {
         StoredSecondaryKey key = new StoredSecondaryKey(Utilities.randomBytes(3), Utilities.randomBytes(3));
-        Jsonifier<StoredSecondaryKey> jsonifier = new JsonifierBuilder().build(StoredSecondaryKey.class);
+        Jsonifier<StoredSecondaryKey> jsonifier = new JsonifierBuilder().build(new TypeReference<StoredSecondaryKey>(){});
         String json = jsonifier.toJson(key);
         StoredSecondaryKey result = jsonifier.fromJson(json);
 

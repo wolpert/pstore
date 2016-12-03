@@ -11,6 +11,7 @@ import com.codeheadsystems.pstore.exceptions.VaultExistsException;
 import com.codeheadsystems.pstore.model.Key;
 import com.codeheadsystems.pstore.model.Vault;
 import com.codeheadsystems.pstore.model.VaultManagerDetails;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class ParanoidVaultManager implements VaultManager {
                 .paranoidManager(paranoidManager);
         this.dataStore = dataStore;
         this.paranoidManager = paranoidManager;
-        this.vaultParanoidStore = paranoidStoreBuilder.build(Vault.class);
+        this.vaultParanoidStore = paranoidStoreBuilder.build(new TypeReference<Vault>() {});
         this.objectMapper = new ObjectMapper();
         initVaultManagerDetails(dataStore);
     }

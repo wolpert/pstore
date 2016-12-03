@@ -7,6 +7,7 @@ import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
 import com.codeheadsystems.pstore.datastore.DataStore;
 import com.codeheadsystems.pstore.datastore.SecureEncryptionException;
 import com.codeheadsystems.pstore.datastore.impl.TmpFileStorage;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.junit.Test;
 
@@ -20,7 +21,6 @@ import static org.junit.Assert.assertNotNull;
 /**
  * BSD-Style License 2016
  */
-
 public class ParanoidStoreBuilderTest {
 
     @Test
@@ -28,10 +28,10 @@ public class ParanoidStoreBuilderTest {
         Map<String, Integer> firstMap = getDefaultMap();
         DataStore dataStore = new TmpFileStorage();
         ParanoidManager manager = new ParanoidManager(14); // used 14 so the test case was fast'ish
-        ParanoidStore<Map> store = new ParanoidStoreBuilder()
+        ParanoidStore<Map<String, Integer>> store = new ParanoidStoreBuilder()
                 .dataStore(dataStore)
                 .paranoidManager(manager)
-                .build(Map.class);
+                .build(new TypeReference<Map<String,Integer>>(){});
         SecondaryKey secondaryKey = manager.generateFreshSecondary("xyzzy");
         String id = store.put(secondaryKey, firstMap);
         try {
@@ -49,10 +49,10 @@ public class ParanoidStoreBuilderTest {
         DataStore dataStore = new TmpFileStorage();
         ParanoidManager manager = new ParanoidManager(14); // used 14 so the test case was fast'ish
         String id = "blah";
-        ParanoidStore<Map> store = new ParanoidStoreBuilder()
+        ParanoidStore<Map<String, Integer>> store = new ParanoidStoreBuilder()
                 .dataStore(dataStore)
                 .paranoidManager(manager)
-                .build(Map.class);
+                .build(new TypeReference<Map<String,Integer>>(){});
         SecondaryKey secondaryKey = manager.generateFreshSecondary("xyzzy");
         String idReturned = store.put(secondaryKey, firstMap, id);
         try {

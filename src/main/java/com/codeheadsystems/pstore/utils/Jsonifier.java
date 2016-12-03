@@ -1,6 +1,7 @@
 package com.codeheadsystems.pstore.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -11,11 +12,11 @@ import java.io.IOException;
 public class Jsonifier<T> {
 
     private final ObjectMapper objectMapper;
-    private final Class<T> clazz;
+    private final TypeReference<T> typeReference;
 
-    public Jsonifier(ObjectMapper objectMapper, Class<T> clazz) {
+    public Jsonifier(ObjectMapper objectMapper, TypeReference<T> typeReference) {
         this.objectMapper = objectMapper;
-        this.clazz = clazz;
+        this.typeReference = typeReference;
     }
 
     public String toJson(T object) throws JsonProcessingException {
@@ -23,6 +24,6 @@ public class Jsonifier<T> {
     }
 
     public T fromJson(String json) throws IOException {
-        return objectMapper.readValue(json, clazz);
+        return objectMapper.readValue(json, typeReference);
     }
 }

@@ -1,6 +1,7 @@
 package com.codeheadsystems.pstore.utils;
 
 import com.codeheadsystems.pstore.model.Entry;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class JsonifierTest {
     public void defaultTest() throws IOException {
         Entry entry = getDefaultEntry();
 
-        Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(Entry.class);
+        Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(new TypeReference<Entry>(){});
         String json = jsonifier.toJson(entry);
         Entry e2 = jsonifier.fromJson(json);
         validateEqual(entry, e2);

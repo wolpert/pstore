@@ -3,6 +3,7 @@ package com.codeheadsystems.pstore.datastore;
 import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.pstore.utils.Jsonifier;
 import com.codeheadsystems.pstore.utils.JsonifierBuilder;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Objects;
@@ -32,12 +33,12 @@ public class ParanoidEncrypterBuilder {
         return this;
     }
 
-    public <T> ParanoidEncrypter<T> build(Class<T> clazz) {
+    public <T> ParanoidEncrypter<T> build(TypeReference<T> typeReference) {
         Objects.requireNonNull(paranoidManager);
         if (objectMapper == null) {
             objectMapper(new ObjectMapper());
         }
-        Jsonifier<T> jsonifier = jsonifierBuilder.build(clazz);
+        Jsonifier<T> jsonifier = jsonifierBuilder.build(typeReference);
         return new ParanoidEncrypter<T>(jsonifier, paranoidManager);
     }
 }

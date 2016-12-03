@@ -7,6 +7,7 @@ import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
 import com.codeheadsystems.pstore.model.Entry;
 import com.codeheadsystems.pstore.utils.Jsonifier;
 import com.codeheadsystems.pstore.utils.JsonifierBuilder;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,7 @@ public class ParanoidStoreTest {
     @Test
     public void defaultTest() throws IOException, SecureEncryptionException, SecretKeyExpiredException, CryptoException {
         Entry entry = getDefaultEntry();
-        Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(Entry.class);
+        Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(new TypeReference<Entry>(){});
         ParanoidEncrypter<Entry> paranoidStore = new ParanoidEncrypter<Entry>(jsonifier, paranoidManager);
         byte[] bytes = new byte[1];
         bytes[0] = 5;
@@ -51,8 +52,8 @@ public class ParanoidStoreTest {
     @Test
     public void testWithBuilder() throws IOException, SecretKeyExpiredException, CryptoException, SecureEncryptionException {
         Entry entry = getDefaultEntry();
-        Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(Entry.class);
-        ParanoidEncrypter<Entry> paranoidStore = new ParanoidEncrypterBuilder().paranoidManager(paranoidManager).build(Entry.class);
+        Jsonifier<Entry> jsonifier = new JsonifierBuilder().build(new TypeReference<Entry>(){});
+        ParanoidEncrypter<Entry> paranoidStore = new ParanoidEncrypterBuilder().paranoidManager(paranoidManager).build(new TypeReference<Entry>(){});
         byte[] bytes = new byte[1];
         bytes[0] = 5;
         String jsonExpected = jsonifier.toJson(entry);

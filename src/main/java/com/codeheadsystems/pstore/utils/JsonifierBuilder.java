@@ -1,5 +1,6 @@
 package com.codeheadsystems.pstore.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -14,11 +15,10 @@ public class JsonifierBuilder {
         return this;
     }
 
-    public <T> Jsonifier<T> build(Class<T> clazz) {
+    public <T> Jsonifier<T> build(TypeReference<T> typeReference) {
         if (objectMapper == null) {
             objectMapper = new ObjectMapper();
         }
-        return new Jsonifier<T>(objectMapper, clazz);
+        return new Jsonifier<T>(objectMapper, typeReference);
     }
-
 }

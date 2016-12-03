@@ -4,6 +4,7 @@ import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.pstore.datastore.DataStore;
 import com.codeheadsystems.pstore.datastore.ParanoidEncrypterBuilder;
 import com.codeheadsystems.pstore.datastore.impl.EncrypterParanoidStore;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Objects;
@@ -35,7 +36,7 @@ public class ParanoidStoreBuilder {
         return this;
     }
 
-    public <T> ParanoidStore<T> build(Class<T> clazz) {
+    public <T> ParanoidStore<T> build(TypeReference<T> typeReference) {
         Objects.requireNonNull(dataStore);
         if (paranoidManager == null) {
             paranoidManager(new ParanoidManager());
@@ -46,7 +47,7 @@ public class ParanoidStoreBuilder {
         ParanoidEncrypterBuilder builder = new ParanoidEncrypterBuilder();
         builder.objectMapper(objectMapper);
         builder.paranoidManager(paranoidManager);
-        return new EncrypterParanoidStore<T>(builder.build(clazz), dataStore);
+        return new EncrypterParanoidStore<T>(builder.build(typeReference), dataStore);
     }
 
 }
