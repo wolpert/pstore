@@ -81,6 +81,7 @@ public class TmpFileStorage implements DataStore {
         fis.close();
         byte[] result = baos.toByteArray();
         baos.close();
+        log.debug("FILE: " + identifier + ":" + new String(result));
         return result;
     }
 

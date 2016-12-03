@@ -18,9 +18,9 @@ public class Key {
     private Collection<String> entryDetails = new HashSet<>();
 
     @JsonCreator
-    public Key(@JsonProperty StoredSecondaryKey storedSecondaryKey,
-               @JsonProperty String vaultId,
-               @JsonProperty Collection<String> entryDetails) {
+    public Key(@JsonProperty(value = "storedSecondaryKey") StoredSecondaryKey storedSecondaryKey,
+               @JsonProperty(value = "vaultId") String vaultId,
+               @JsonProperty(value = "entryDetails") Collection<String> entryDetails) {
         this.storedSecondaryKey = storedSecondaryKey;
         this.vaultId = vaultId;
         this.entryDetails = entryDetails;

@@ -1,6 +1,7 @@
 package com.codeheadsystems.pstore.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Collection;
@@ -13,26 +14,31 @@ import java.util.Map;
 
 public class VaultManagerDetails {
 
-    private Map<String, Key> ids = new HashMap<>();
+    private Map<String, Key> idMap = new HashMap<>();
 
     @JsonCreator
-    public VaultManagerDetails(@JsonProperty Map<String, Key> ids) {
-        this.ids = ids;
+    public VaultManagerDetails(@JsonProperty(value = "idMap") Map<String, Key> idMap) {
+        this.idMap = idMap;
     }
 
+    public Map<String, Key> getIdMap() {
+        return idMap;
+    }
+
+    @JsonIgnore
     public Collection<String> getIds() {
-        return ids.keySet();
+        return idMap.keySet();
     }
 
     public void delete(String id) {
-        ids.remove(id);
+        idMap.remove(id);
     }
 
     public void addId(String id, Key key) {
-        ids.put(id, key);
+        idMap.put(id, key);
     }
 
     public Key getKey(String id) {
-        return ids.get(id);
+        return idMap.get(id);
     }
 }

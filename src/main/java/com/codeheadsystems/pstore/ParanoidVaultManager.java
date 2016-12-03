@@ -113,4 +113,8 @@ public class ParanoidVaultManager implements VaultManager {
     public Collection<String> listVaults() {
         return vaultManagerDetails.getIds();
     }
+
+    public void reReadVaults() throws IOException {
+        initVaultManagerDetails(dataStore);
+    }
 }

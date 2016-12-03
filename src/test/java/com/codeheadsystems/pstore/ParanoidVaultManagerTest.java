@@ -45,6 +45,18 @@ public class ParanoidVaultManagerTest {
     }
 
     @Test
+    public void unlockTest() throws VaultExistsException, SecretKeyExpiredException, CryptoException, SecureEncryptionException, IOException {
+        ParanoidVaultManager manager = new ParanoidVaultManager(dataStore, paranoidManager);
+        assertEquals(0, manager.listVaults().size());
+        assertNotNull(manager.initVault("1", PASSWORD));
+        assertEquals(1, manager.listVaults().size());
+        assertNotNull(manager.unlockVault("1", PASSWORD));
+        assertEquals(2, dataStore.countFilesInDataStore());
+        manager.reReadVaults();
+        assertEquals(1, manager.listVaults().size());
+    }
+
+    @Test
     public void createDeleteTest() throws IOException, VaultExistsException, SecretKeyExpiredException, CryptoException, SecureEncryptionException {
         assertEquals(0, dataStore.countFilesInDataStore());
         ParanoidVaultManager manager = new ParanoidVaultManager(dataStore, paranoidManager);
