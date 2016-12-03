@@ -39,13 +39,14 @@ public class ParanoidVaultManager implements VaultManager {
     }
 
     public ParanoidVaultManager(final DataStore dataStore, final ParanoidManager paranoidManager) throws IOException {
+        this.objectMapper = new ObjectMapper();
         ParanoidStoreBuilder paranoidStoreBuilder = new ParanoidStoreBuilder()
                 .dataStore(dataStore)
+                .objectMapper(objectMapper)
                 .paranoidManager(paranoidManager);
         this.dataStore = dataStore;
         this.paranoidManager = paranoidManager;
         this.vaultParanoidStore = paranoidStoreBuilder.build(new TypeReference<Vault>() {});
-        this.objectMapper = new ObjectMapper();
         initVaultManagerDetails(dataStore);
     }
 
