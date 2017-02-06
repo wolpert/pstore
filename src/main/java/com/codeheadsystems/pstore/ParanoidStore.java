@@ -1,5 +1,6 @@
 package com.codeheadsystems.pstore;
 
+import com.codeheadsystems.crypto.CryptoException;
 import com.codeheadsystems.crypto.manager.SecondaryKey;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
 import com.codeheadsystems.pstore.datastore.SecureEncryptionException;
@@ -59,4 +60,13 @@ public interface ParanoidStore<T> {
      * @param identifier that is to be deleted if it exists. Does nothing if it does not exist.
      */
     void delete(String identifier);
+
+    /**
+     * Use this when creating new entries and you are planning on storing a 'stored secondary key'
+     * elsewhere.
+     *
+     * @param secondaryKey The key used to encrypt the data
+     * @return a SecondaryKey that can be used to store objects.
+     */
+    SecondaryKey generateFreshSecondaryKey(SecondaryKey secondaryKey) throws CryptoException, SecretKeyExpiredException;
 }

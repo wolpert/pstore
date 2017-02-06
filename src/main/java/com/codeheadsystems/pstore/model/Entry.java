@@ -5,14 +5,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
-import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * BSD-Style License 2016
  */
 public class Entry {
 
-    private final String url;
+    private final String title;
+    private String url;
     private Date createDate;
     private Date updateDate;
     private String entryDetailIdentifier;
@@ -20,24 +22,34 @@ public class Entry {
 
 
     @JsonCreator
-    public Entry(@JsonProperty(value = "url", required = true) String url,
+    public Entry(@JsonProperty(value = "title", required = true) String title,
+                 @JsonProperty(value = "url") String url,
                  @JsonProperty(value = "createDate") Date createDate,
                  @JsonProperty(value = "updateDate") Date updateDate,
                  @JsonProperty(value = "entryDetailIdentifier") String entryDetailIdentifier,
                  @JsonProperty(value = "storedSecondaryKey") StoredSecondaryKey storedSecondaryKey) {
-        this(url);
+        this(title);
+        this.url = url;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.entryDetailIdentifier = entryDetailIdentifier;
         this.storedSecondaryKey = storedSecondaryKey;
     }
 
-    public Entry(String url) {
-        this.url = Objects.requireNonNull(url);
+    public Entry(String title) {
+        this.title = requireNonNull(title);
     }
 
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public Date getCreateDate() {
@@ -64,18 +76,11 @@ public class Entry {
         this.entryDetailIdentifier = entryDetailIdentifier;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Entry entry = (Entry) o;
-
-        return getUrl().equals(entry.getUrl());
+    public StoredSecondaryKey getStoredSecondaryKey() {
+        return storedSecondaryKey;
     }
 
-    @Override
-    public int hashCode() {
-        return getUrl().hashCode();
+    public void setStoredSecondaryKey(StoredSecondaryKey storedSecondaryKey) {
+        this.storedSecondaryKey = storedSecondaryKey;
     }
 }

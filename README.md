@@ -2,15 +2,16 @@ pStore
 
 ## Usage ##
 
-VaultManager vm = new ParanoidVaultManager();
-Vault vault = vm.initVault("id1", "password");
-vault.addEntry(entry, entryDetail);
-vault.getEntry("website");
-vault.getEntryDetails("website");
-vault.lock();
-vault = vm.unlockVault("id1","password");
-vault.getEntry("website");
-vm.listVaults();
+    VaultManager vm = new ParanoidVaultManager();
+    Vault vault = vm.initVault("id1", "password");
+    Entry entry = new Entry("website", "uname", "password", "notes...")
+    vault.addEntry(entry);
+    vault.getEntryKey("website");
+    vault.getEntryDetails("website");
+    vault.lock();
+    vault = vm.unlockVault("id1","password");
+    vault.getEntryDetails("website");
+    vm.listVaults();
 
 ## Internals ##
 

@@ -50,4 +50,9 @@ public class ParanoidEncrypter<T> implements SecureEncrypter<T> {
             throw new SecureEncryptionException(e.getMessage(), e);
         }
     }
+
+    @Override
+    public SecondaryKey freshSecondayKey(SecondaryKey secondaryKey) throws CryptoException, SecretKeyExpiredException {
+        return paranoidManager.generateFreshSecondary(secondaryKey);
+    }
 }

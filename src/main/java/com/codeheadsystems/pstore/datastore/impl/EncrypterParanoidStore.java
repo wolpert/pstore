@@ -1,5 +1,6 @@
 package com.codeheadsystems.pstore.datastore.impl;
 
+import com.codeheadsystems.crypto.CryptoException;
 import com.codeheadsystems.crypto.manager.SecondaryKey;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
 import com.codeheadsystems.pstore.ParanoidStore;
@@ -48,5 +49,10 @@ public class EncrypterParanoidStore<T> implements ParanoidStore<T> {
     @Override
     public void delete(String identifier) {
         dataStore.delete(identifier);
+    }
+
+    @Override
+    public SecondaryKey generateFreshSecondaryKey(SecondaryKey secondaryKey) throws CryptoException, SecretKeyExpiredException {
+        return secureEncrypter.freshSecondayKey(secondaryKey);
     }
 }

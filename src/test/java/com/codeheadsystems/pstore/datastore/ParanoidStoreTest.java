@@ -68,7 +68,8 @@ public class ParanoidStoreTest {
 
     private Entry getDefaultEntry() {
         Entry entry;
-        entry = new Entry("http://www.google.com/",
+        entry = new Entry("Soogle",
+                "http://www.google.com/",
                 new Date(),
                 new Date(),
                 "string123",

@@ -7,6 +7,7 @@ import com.codeheadsystems.pstore.datastore.impl.EncrypterParanoidStore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.inject.Inject;
 import java.util.Objects;
 
 /**
@@ -17,37 +18,23 @@ import java.util.Objects;
  */
 public class ParanoidStoreBuilder {
 
-    private DataStore dataStore;
-    private ParanoidManager paranoidManager;
-    private ObjectMapper objectMapper;
+    private final DataStore dataStore;
+    private final ParanoidManager paranoidManager;
+    private final ObjectMapper objectMapper;
 
-    public ParanoidStoreBuilder dataStore(DataStore dataStore) {
+    @Inject
+    public ParanoidStoreBuilder(DataStore dataStore, ParanoidManager paranoidManager, ObjectMapper objectMapper) {
         this.dataStore = dataStore;
-        return this;
-    }
-
-    public ParanoidStoreBuilder paranoidManager(ParanoidManager paranoidManager) {
         this.paranoidManager = paranoidManager;
-        return this;
-    }
-
-    public ParanoidStoreBuilder objectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        return this;
     }
 
     public <T> ParanoidStore<T> build(TypeReference<T> typeReference) {
         Objects.requireNonNull(dataStore);
-        if (paranoidManager == null) {
-            paranoidManager(new ParanoidManager());
-        }
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
-        }
         ParanoidEncrypterBuilder builder = new ParanoidEncrypterBuilder();
         builder.objectMapper(objectMapper);
         builder.paranoidManager(paranoidManager);
-        return new EncrypterParanoidStore<T>(builder.build(typeReference), dataStore);
+        return new EncrypterParanoidStore<>(builder.build(typeReference), dataStore);
     }
 
 }

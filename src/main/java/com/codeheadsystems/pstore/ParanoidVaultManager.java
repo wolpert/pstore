@@ -8,12 +8,14 @@ import com.codeheadsystems.pstore.datastore.DataStore;
 import com.codeheadsystems.pstore.datastore.SecureEncryptionException;
 import com.codeheadsystems.pstore.datastore.StoredSecondaryKey;
 import com.codeheadsystems.pstore.exceptions.VaultExistsException;
+import com.codeheadsystems.pstore.model.EntryDetails;
 import com.codeheadsystems.pstore.model.Key;
 import com.codeheadsystems.pstore.model.Vault;
 import com.codeheadsystems.pstore.model.VaultManagerDetails;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,26 +33,29 @@ public class ParanoidVaultManager implements VaultManager {
     private final DataStore dataStore;
     private final ParanoidManager paranoidManager;
     private final ParanoidStore<Vault> vaultParanoidStore;
+    private final ParanoidStore<EntryDetails> entryDetailsParanoidStore;
     private final ObjectMapper objectMapper;
     private VaultManagerDetails vaultManagerDetails;
 
-    public ParanoidVaultManager(final DataStore dataStore) throws IOException {
-        this(dataStore, new ParanoidManager());
-    }
-
-    public ParanoidVaultManager(final DataStore dataStore, final ParanoidManager paranoidManager) throws IOException {
+    @Inject
+    public ParanoidVaultManager(final DataStore dataStore,
+                                final ParanoidManager paranoidManager,
+                                final ParanoidStoreBuilder paranoidStoreBuilder) {
         this.objectMapper = new ObjectMapper();
-        ParanoidStoreBuilder paranoidStoreBuilder = new ParanoidStoreBuilder()
-                .dataStore(dataStore)
-                .objectMapper(objectMapper)
-                .paranoidManager(paranoidManager);
         this.dataStore = dataStore;
         this.paranoidManager = paranoidManager;
-        this.vaultParanoidStore = paranoidStoreBuilder.build(new TypeReference<Vault>() {});
-        initVaultManagerDetails(dataStore);
+        this.vaultParanoidStore = paranoidStoreBuilder.build(new TypeReference<Vault>() {
+        });
+        this.entryDetailsParanoidStore = paranoidStoreBuilder.build(new TypeReference<EntryDetails>() {
+        });
+        try {
+            initVaultManagerDetails();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
-    private void initVaultManagerDetails(DataStore dataStore) throws IOException {
+    private void initVaultManagerDetails() throws IOException {
         byte[] listBytes = dataStore.get(VAULT_LIST);
         if (listBytes != null) {
             vaultManagerDetails = objectMapper.readValue(listBytes, VaultManagerDetails.class);
@@ -73,6 +78,7 @@ public class ParanoidVaultManager implements VaultManager {
         Vault vault = new Vault();
         SecondaryKey secondaryKey = paranoidManager.generateFreshSecondary(password);
         vault.setVaultSecondaryKey(secondaryKey);
+        vault.setVaultParanoidStore(vaultParanoidStore);
         String vaultId = vaultParanoidStore.put(secondaryKey, vault);
         try {
             Key key = new Key(new StoredSecondaryKey(secondaryKey), vaultId, new HashSet<String>());
@@ -94,6 +100,7 @@ public class ParanoidVaultManager implements VaultManager {
         SecondaryKey secondaryKey = key.getStoredSecondaryKey().regenerate(paranoidManager, password);
         Vault vault = vaultParanoidStore.get(secondaryKey, key.getVaultId());
         vault.setVaultSecondaryKey(secondaryKey);
+        vault.setVaultParanoidStore(vaultParanoidStore);
         return vault;
     }
 
@@ -115,6 +122,6 @@ public class ParanoidVaultManager implements VaultManager {
     }
 
     public void reReadVaults() throws IOException {
-        initVaultManagerDetails(dataStore);
+        initVaultManagerDetails();
     }
 }

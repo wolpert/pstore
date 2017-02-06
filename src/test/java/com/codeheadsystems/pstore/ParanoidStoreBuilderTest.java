@@ -1,14 +1,10 @@
 package com.codeheadsystems.pstore;
 
 import com.codeheadsystems.crypto.CryptoException;
-import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.crypto.manager.SecondaryKey;
 import com.codeheadsystems.crypto.password.SecretKeyExpiredException;
-import com.codeheadsystems.pstore.datastore.DataStore;
 import com.codeheadsystems.pstore.datastore.SecureEncryptionException;
-import com.codeheadsystems.pstore.datastore.impl.TmpFileStorage;
 import com.fasterxml.jackson.core.type.TypeReference;
-
 import org.junit.Test;
 
 import java.io.IOException;
@@ -21,18 +17,14 @@ import static org.junit.Assert.assertNotNull;
 /**
  * BSD-Style License 2016
  */
-public class ParanoidStoreBuilderTest {
+public class ParanoidStoreBuilderTest extends InjectedBaseTest {
 
     @Test
     public void testDefaultUsecase() throws IOException, CryptoException, SecretKeyExpiredException, SecureEncryptionException {
         Map<String, Integer> firstMap = getDefaultMap();
-        DataStore dataStore = new TmpFileStorage();
-        ParanoidManager manager = new ParanoidManager(14); // used 14 so the test case was fast'ish
-        ParanoidStore<Map<String, Integer>> store = new ParanoidStoreBuilder()
-                .dataStore(dataStore)
-                .paranoidManager(manager)
-                .build(new TypeReference<Map<String,Integer>>(){});
-        SecondaryKey secondaryKey = manager.generateFreshSecondary("xyzzy");
+        ParanoidStore<Map<String, Integer>> store = paranoidStoreBuilder().build(new TypeReference<Map<String, Integer>>() {
+        });
+        SecondaryKey secondaryKey = paranoidManager().generateFreshSecondary("xyzzy");
         String id = store.put(secondaryKey, firstMap);
         try {
             assertNotNull(id);
@@ -46,14 +38,10 @@ public class ParanoidStoreBuilderTest {
     @Test
     public void testNamedDatastore() throws IOException, CryptoException, SecretKeyExpiredException, SecureEncryptionException {
         Map<String, Integer> firstMap = getDefaultMap();
-        DataStore dataStore = new TmpFileStorage();
-        ParanoidManager manager = new ParanoidManager(14); // used 14 so the test case was fast'ish
         String id = "blah";
-        ParanoidStore<Map<String, Integer>> store = new ParanoidStoreBuilder()
-                .dataStore(dataStore)
-                .paranoidManager(manager)
-                .build(new TypeReference<Map<String,Integer>>(){});
-        SecondaryKey secondaryKey = manager.generateFreshSecondary("xyzzy");
+        ParanoidStore<Map<String, Integer>> store = paranoidStoreBuilder().build(new TypeReference<Map<String, Integer>>() {
+        });
+        SecondaryKey secondaryKey = paranoidManager().generateFreshSecondary("xyzzy");
         String idReturned = store.put(secondaryKey, firstMap, id);
         try {
             assertEquals(id, idReturned);
