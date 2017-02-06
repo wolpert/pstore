@@ -2,6 +2,7 @@ package com.codeheadsystems.pstore.dagger;
 
 import com.codeheadsystems.crypto.manager.ParanoidManager;
 import com.codeheadsystems.pstore.ParanoidStoreBuilder;
+import com.codeheadsystems.pstore.ParanoidVaultManager;
 import com.codeheadsystems.pstore.datastore.DataStore;
 import dagger.Component;
 
@@ -14,5 +15,6 @@ public interface ProductionComponent {
     DataStore dataStore();
     ParanoidManager paranoidManager();
     ParanoidStoreBuilder paranoidStoreBuilder();
+    ParanoidVaultManager paranoidVaultManager();
 
 }

@@ -22,9 +22,9 @@ public class ParanoidStoreBuilderTest extends InjectedBaseTest {
     @Test
     public void testDefaultUsecase() throws IOException, CryptoException, SecretKeyExpiredException, SecureEncryptionException {
         Map<String, Integer> firstMap = getDefaultMap();
-        ParanoidStore<Map<String, Integer>> store = paranoidStoreBuilder().build(new TypeReference<Map<String, Integer>>() {
+        ParanoidStore<Map<String, Integer>> store = pc().paranoidStoreBuilder().build(new TypeReference<Map<String, Integer>>() {
         });
-        SecondaryKey secondaryKey = paranoidManager().generateFreshSecondary("xyzzy");
+        SecondaryKey secondaryKey = pc().paranoidManager().generateFreshSecondary("xyzzy");
         String id = store.put(secondaryKey, firstMap);
         try {
             assertNotNull(id);
@@ -39,9 +39,9 @@ public class ParanoidStoreBuilderTest extends InjectedBaseTest {
     public void testNamedDatastore() throws IOException, CryptoException, SecretKeyExpiredException, SecureEncryptionException {
         Map<String, Integer> firstMap = getDefaultMap();
         String id = "blah";
-        ParanoidStore<Map<String, Integer>> store = paranoidStoreBuilder().build(new TypeReference<Map<String, Integer>>() {
+        ParanoidStore<Map<String, Integer>> store = pc().paranoidStoreBuilder().build(new TypeReference<Map<String, Integer>>() {
         });
-        SecondaryKey secondaryKey = paranoidManager().generateFreshSecondary("xyzzy");
+        SecondaryKey secondaryKey = pc().paranoidManager().generateFreshSecondary("xyzzy");
         String idReturned = store.put(secondaryKey, firstMap, id);
         try {
             assertEquals(id, idReturned);

@@ -20,20 +20,19 @@ public class ParanoidVaultManagerTest extends InjectedBaseTest {
 
     @Test
     public void unlockTest() throws VaultExistsException, SecretKeyExpiredException, CryptoException, SecureEncryptionException, IOException {
-        ParanoidVaultManager manager = new ParanoidVaultManager(dataStore(), paranoidManager(), paranoidStoreBuilder());
-        assertEquals(0, manager.listVaults().size());
-        assertNotNull(manager.initVault("1", PASSWORD));
-        assertEquals(1, manager.listVaults().size());
-        assertNotNull(manager.unlockVault("1", PASSWORD));
+        assertEquals(0, pc().paranoidVaultManager().listVaults().size());
+        assertNotNull(pc().paranoidVaultManager().initVault("1", PASSWORD));
+        assertEquals(1, pc().paranoidVaultManager().listVaults().size());
+        assertNotNull(pc().paranoidVaultManager().unlockVault("1", PASSWORD));
         assertEquals(2, dataStore().countFilesInDataStore());
-        manager.reReadVaults();
-        assertEquals(1, manager.listVaults().size());
+        pc().paranoidVaultManager().reReadVaults();
+        assertEquals(1, pc().paranoidVaultManager().listVaults().size());
     }
 
     @Test
     public void createDeleteTest() throws IOException, VaultExistsException, SecretKeyExpiredException, CryptoException, SecureEncryptionException {
         assertEquals(0, dataStore().countFilesInDataStore());
-        ParanoidVaultManager manager = new ParanoidVaultManager(dataStore(), paranoidManager(), paranoidStoreBuilder());
+        ParanoidVaultManager manager = pc().paranoidVaultManager();
         assertEquals(0, manager.listVaults().size());
         assertEquals(1, dataStore().countFilesInDataStore()); // vault list
         assertNotNull(manager.initVault("1", PASSWORD));

@@ -12,7 +12,6 @@ import com.codeheadsystems.pstore.model.EntryDetails;
 import com.codeheadsystems.pstore.model.Key;
 import com.codeheadsystems.pstore.model.Vault;
 import com.codeheadsystems.pstore.model.VaultManagerDetails;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.inject.Inject;
@@ -40,14 +39,13 @@ public class ParanoidVaultManager implements VaultManager {
     @Inject
     public ParanoidVaultManager(final DataStore dataStore,
                                 final ParanoidManager paranoidManager,
-                                final ParanoidStoreBuilder paranoidStoreBuilder) {
+                                final ParanoidStore<Vault> vaultParanoidStore,
+                                final ParanoidStore<EntryDetails> entryDetailsParanoidStore) {
         this.objectMapper = new ObjectMapper();
         this.dataStore = dataStore;
         this.paranoidManager = paranoidManager;
-        this.vaultParanoidStore = paranoidStoreBuilder.build(new TypeReference<Vault>() {
-        });
-        this.entryDetailsParanoidStore = paranoidStoreBuilder.build(new TypeReference<EntryDetails>() {
-        });
+        this.vaultParanoidStore = vaultParanoidStore;
+        this.entryDetailsParanoidStore = entryDetailsParanoidStore;
         try {
             initVaultManagerDetails();
         } catch (IOException e) {

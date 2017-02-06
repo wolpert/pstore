@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Objects;
 
 /**
@@ -16,6 +17,7 @@ import java.util.Objects;
  * Provides the base functionality of this class. Can store encrypted data where we
  * only have the identifiers associated with the encrypted data.
  */
+@Singleton
 public class ParanoidStoreBuilder {
 
     private final DataStore dataStore;
